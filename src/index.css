@@ -1,0 +1,421 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens
+   ========================================================================== */
+@theme {
+  /* Maroon — deep lacquer reds, dark enough to make gold glow */
+  --color-ink: #0C0304;
+  --color-maroon-dark: #1B0508;
+  --color-maroon-deep: #33070E;
+  --color-maroon-mid: #520B15;
+  --color-maroon: #6E0E14;
+  --color-maroon-glow: #8E1721;
+
+  /* Gold — a real metal ramp, not one flat swatch */
+  --color-gold-dark: #8A6A1F;
+  --color-gold-deep: #A9862A;
+  --color-gold: #D4AF37;
+  --color-gold-light: #F0DAA0;
+  --color-gold-pale: #FCF4DC;
+
+  --color-ivory: #FFF6E4;
+
+  /* Type */
+  --font-vibes: "Great Vibes", cursive;
+  --font-cinzel: "Cinzel", serif;
+  --font-deco: "Cinzel Decorative", "Cinzel", serif;
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-playfair: "Cormorant Garamond", serif;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-maroon-dark);
+    color: var(--color-ivory);
+    font-family: var(--font-cormorant);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgba(212, 175, 55, 0.32);
+    color: var(--color-gold-pale);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+@layer utilities {
+  /* ---- Backdrops -------------------------------------------------------- */
+  .bg-royal {
+    background-color: #1b0508;
+    background-image:
+      radial-gradient(115% 75% at 50% -8%, rgba(158, 28, 40, 0.5) 0%, rgba(90, 13, 20, 0.3) 40%, rgba(27, 5, 8, 0) 72%),
+      radial-gradient(80% 55% at 50% 108%, rgba(126, 20, 32, 0.32) 0%, rgba(27, 5, 8, 0) 62%),
+      linear-gradient(180deg, #2c060d 0%, #1e0509 52%, #120406 100%);
+  }
+
+  /* legacy alias so nothing breaks */
+  .bg-royal-radial {
+    background-color: #1b0508;
+    background-image:
+      radial-gradient(115% 75% at 50% -8%, rgba(158, 28, 40, 0.5) 0%, rgba(90, 13, 20, 0.3) 40%, rgba(27, 5, 8, 0) 72%),
+      radial-gradient(80% 55% at 50% 108%, rgba(126, 20, 32, 0.32) 0%, rgba(27, 5, 8, 0) 62%),
+      linear-gradient(180deg, #2c060d 0%, #1e0509 52%, #120406 100%);
+  }
+
+  /* Fine printed-paper grain — kills the "flat CSS gradient" look */
+  .layer-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+  }
+
+  .layer-vignette {
+    background: radial-gradient(125% 95% at 50% 45%, transparent 42%, rgba(0, 0, 0, 0.42) 78%, rgba(0, 0, 0, 0.72) 100%);
+  }
+
+  /* Kolam-style dotted lattice */
+  .layer-kolam {
+    background-image:
+      radial-gradient(circle, rgba(212, 175, 55, 0.16) 1.1px, transparent 1.3px),
+      radial-gradient(circle, rgba(212, 175, 55, 0.07) 1.1px, transparent 1.3px);
+    background-size: 38px 38px, 38px 38px;
+    background-position: 0 0, 19px 19px;
+  }
+
+  /* legacy alias */
+  .pattern-overlay {
+    background-image:
+      radial-gradient(circle, rgba(212, 175, 55, 0.16) 1.1px, transparent 1.3px),
+      radial-gradient(circle, rgba(212, 175, 55, 0.07) 1.1px, transparent 1.3px);
+    background-size: 38px 38px, 38px 38px;
+    background-position: 0 0, 19px 19px;
+  }
+
+  .layer-silk {
+    background-image: repeating-linear-gradient(
+      115deg,
+      rgba(255, 214, 150, 0.035) 0px,
+      rgba(255, 214, 150, 0.035) 1px,
+      transparent 1px,
+      transparent 9px
+    );
+  }
+
+  /* ---- Gold leaf type --------------------------------------------------- */
+  .text-foil {
+    background-image: linear-gradient(
+      96deg,
+      #a9862a 0%,
+      #cfa832 11%,
+      #f1dfa8 25%,
+      #fbf1d0 35%,
+      #e3c56d 47%,
+      #c69f2a 61%,
+      #eed9a0 77%,
+      #b8912c 91%,
+      #ddbe5e 100%
+    );
+    background-size: 155% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.45)) drop-shadow(0 6px 18px rgba(212, 175, 55, 0.22));
+  }
+
+  .text-foil-sheen {
+    animation: foil-sweep 8s ease-in-out infinite;
+  }
+
+  /* legacy alias */
+  .text-gradient-gold {
+    background-image: linear-gradient(180deg, #fbeec0 0%, #d4af37 48%, #97761f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-engraved {
+    text-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.5),
+      0 -1px 0 rgba(255, 226, 168, 0.12);
+  }
+
+  /* ---- Rules & frames --------------------------------------------------- */
+  .rule-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.85), transparent);
+  }
+
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.85), transparent);
+  }
+
+  .card-royal {
+    position: relative;
+    border-radius: 22px;
+    border: 1px solid rgba(212, 175, 55, 0.34);
+    background-image:
+      linear-gradient(158deg, rgba(255, 220, 155, 0.10) 0%, rgba(110, 14, 20, 0.26) 42%, rgba(20, 4, 7, 0.62) 100%);
+    background-color: rgba(38, 7, 12, 0.55);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 236, 190, 0.22),
+      inset 0 -26px 48px rgba(0, 0, 0, 0.34),
+      0 26px 64px -22px rgba(0, 0, 0, 0.8);
+  }
+
+  .card-royal::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: 16px;
+    pointer-events: none;
+  }
+
+  /* legacy aliases */
+  .glass-gold {
+    border: 1px solid rgba(212, 175, 55, 0.34);
+    background-image:
+      linear-gradient(158deg, rgba(255, 220, 155, 0.10) 0%, rgba(110, 14, 20, 0.26) 42%, rgba(20, 4, 7, 0.62) 100%);
+    backdrop-filter: blur(10px);
+  }
+
+  .shadow-gold {
+    box-shadow:
+      0 0 30px rgba(212, 175, 55, 0.18),
+      0 20px 48px -18px rgba(0, 0, 0, 0.75);
+  }
+
+  .glow-gold {
+    box-shadow:
+      0 0 0 1px rgba(212, 175, 55, 0.35),
+      0 0 34px rgba(212, 175, 55, 0.32),
+      0 0 90px rgba(212, 175, 55, 0.14);
+  }
+
+  .arch-top {
+    border-top-left-radius: 100% 62%;
+    border-top-right-radius: 100% 62%;
+  }
+
+  /* ---- Buttons ---------------------------------------------------------- */
+  .btn-gold {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 font-cinzel text-[11px] uppercase tracking-[0.26em] text-maroon-dark transition-all duration-300 sm:text-xs;
+    background-image: linear-gradient(
+      142deg,
+      #fdf6e0 0%,
+      #ecd693 26%,
+      #d4af37 52%,
+      #b58f28 74%,
+      #f0dca4 100%
+    );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      inset 0 -2px 6px rgba(120, 88, 20, 0.35),
+      0 12px 30px -10px rgba(212, 175, 55, 0.6),
+      0 3px 12px rgba(0, 0, 0, 0.45);
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      inset 0 -2px 6px rgba(120, 88, 20, 0.3),
+      0 18px 40px -10px rgba(212, 175, 55, 0.75),
+      0 4px 14px rgba(0, 0, 0, 0.5);
+  }
+
+  .btn-gold:active {
+    transform: translateY(0);
+  }
+
+  .btn-ghost {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 font-cinzel text-[10px] uppercase tracking-[0.26em] text-gold-light transition-all duration-300 sm:text-[11px];
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    background: rgba(16, 4, 6, 0.55);
+    backdrop-filter: blur(8px);
+  }
+
+  .btn-ghost:hover {
+    border-color: rgba(212, 175, 55, 0.85);
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--color-gold-pale);
+    transform: translateY(-2px);
+  }
+
+  .mandala-ring {
+    background: repeating-conic-gradient(
+      from 0deg,
+      rgba(212, 175, 55, 0.14) 0deg 5deg,
+      transparent 5deg 12deg
+    );
+    border-radius: 9999px;
+    mask-image: radial-gradient(circle, transparent 58%, #000 60%, #000 100%);
+    -webkit-mask-image: radial-gradient(circle, transparent 58%, #000 60%, #000 100%);
+  }
+
+  .tracking-royal {
+    letter-spacing: 0.34em;
+  }
+}
+
+/* ==========================================================================
+   Motion
+   ========================================================================== */
+@keyframes foil-sweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes halo-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes flame-flicker {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1);
+    opacity: 0.95;
+  }
+  35% {
+    transform: scaleY(1.14) scaleX(0.93);
+    opacity: 1;
+  }
+  70% {
+    transform: scaleY(0.92) scaleX(1.05);
+    opacity: 0.85;
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 26s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-slow 44s linear infinite reverse;
+}
+
+.animate-halo {
+  animation: halo-pulse 4.5s ease-in-out infinite;
+}
+
+.animate-flame {
+  animation: flame-flicker 1.6s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .animate-spin-reverse,
+  .animate-halo,
+  .animate-flame,
+  .text-foil-sheen {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ==========================================================================
+   Scrollbar
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #120406;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#d4af37, #8a6a1f);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#f0daa0, #a9862a);
+}
+
+/* ==========================================================================
+   Swiper theming — overrides the library's default blue
+   ========================================================================== */
+:root {
+  --swiper-theme-color: #d4af37;
+  --swiper-pagination-color: #d4af37;
+  --swiper-pagination-bullet-inactive-color: #d4af37;
+  --swiper-pagination-bullet-inactive-opacity: 0.25;
+  --swiper-pagination-bullet-size: 7px;
+  --swiper-pagination-bullet-horizontal-gap: 5px;
+  --swiper-pagination-bottom: 0px;
+}
+
+.swiper-pagination-bullet {
+  background: #d4af37 !important;
+  opacity: 0.25 !important;
+  transition: width 0.35s ease, opacity 0.35s ease;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  width: 26px !important;
+  border-radius: 999px !important;
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.7);
+}
+
+.swiper-slide {
+  height: auto;
+}
