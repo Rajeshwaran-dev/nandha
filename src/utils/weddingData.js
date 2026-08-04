@@ -1,6 +1,6 @@
 export const wedding = {
   // Derived from the couple's names — change freely if you use a different tag.
-  hashtag: "#NandhaWedsNandhini",
+  hashtag: "#Nandhawedsnandhini",
 
   groom: {
     name: "Nandha Kumar",
