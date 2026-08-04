@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInvite } from "../context/InviteContext";
 import GoldParticles from "./GoldParticles";
-import { CornerFlourish, Lotus, SealMedallion, TempleLamp } from "./Ornaments";
+import { CornerFlourish, Lotus, TempleLamp } from "./Ornaments";
 import { wedding } from "../utils/weddingData";
 
 /* ---------------------------------------------------------------- carving */
@@ -153,6 +153,43 @@ function DoorPanel({ side, open }) {
   );
 }
 
+
+/** The supplied image is split at the rope, then its two sides pull apart. */
+function TugOfWar({ opening }) {
+  const halves = [
+    { side: "left", className: "left-0", x: "-72vw", rotate: -3 },
+    { side: "right", className: "right-0", x: "72vw", rotate: 3 },
+  ];
+
+  return (
+    <motion.div
+      className="pointer-events-none absolute left-1/2 top-1/2 z-30 h-auto w-[min(88vw,1000px)] -translate-x-1/2 -translate-y-1/2"
+      style={{ aspectRatio: "1024 / 767" }}
+      aria-hidden="true"
+      animate={opening ? { x: [0, -2, 3, -4, 4, -3, 2, 0] } : { x: 0 }}
+      transition={{ duration: 0.52, ease: [0.36, 0.07, 0.19, 0.97] }}
+    >
+      {halves.map(({ side, className, x, rotate }) => (
+        <motion.div
+          key={side}
+          className={`absolute top-0 h-full w-1/2 overflow-hidden ${className}`}
+          initial={{ x: 0, rotate: 0, opacity: 1 }}
+          animate={opening ? { x, rotate, opacity: 0 } : { x: 0, rotate: 0, opacity: 1 }}
+          transition={{ duration: 1.38, delay: 0.52, ease: [0.65, 0, 0.25, 1] }}
+        >
+          <img
+            src="/preloader.png"
+            alt=""
+            draggable="false"
+            className={`absolute top-0 h-full max-w-none select-none ${
+              side === "left" ? "left-0 w-[200%]" : "right-0 w-[200%]"
+            }`}
+          />
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
 /* ------------------------------------------------------------------ gate  */
 
 export default function GateIntro() {
@@ -162,7 +199,7 @@ export default function GateIntro() {
   const handleOpen = () => {
     if (opening) return;
     setOpening(true);
-    setTimeout(() => setGatesOpen(true), 2150);
+    setTimeout(() => setGatesOpen(true), 1900);
   };
 
   return (
@@ -203,64 +240,30 @@ export default function GateIntro() {
           <DoorPanel side="left" open={opening} />
           <DoorPanel side="right" open={opening} />
 
-          {/* ---- the seal ---- */}
+          <TugOfWar opening={opening} />
+
+          {/* ---- opening control ---- */}
           <AnimatePresence>
             {!opening && (
               <motion.div
-                className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
-                exit={{ scale: 1.7, opacity: 0, rotate: 18 }}
-                transition={{ duration: 0.6, ease: "easeIn" }}
+                className="absolute left-1/2 top-1/2 z-40 -translate-x-1/2 translate-y-[5.6rem] sm:translate-y-[7.5rem]"
+                exit={{ y: 18, opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.22, ease: "easeIn" }}
               >
                 <motion.button
                   onClick={handleOpen}
                   aria-label="Open the invitation"
-                  className="group relative flex flex-col items-center"
-                  initial={{ opacity: 0, scale: 0.8 }}
+                  className="group relative inline-flex items-center justify-center rounded-full border border-gold/60 bg-maroon-dark/90 px-6 py-3 font-cinzel text-[10px] tracking-[0.34em] text-gold-light uppercase shadow-[0_0_24px_rgba(212,175,55,0.32),inset_0_1px_rgba(255,235,180,0.18)] backdrop-blur-sm transition hover:scale-105 hover:border-gold hover:bg-maroon-deep sm:px-8 sm:text-xs"
+                  initial={{ opacity: 0, scale: 0.86 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
-                  {/* pulsing halo rings */}
-                  {[0, 1].map((i) => (
-                    <motion.span
-                      key={i}
-                      className="absolute top-[68px] h-[150px] w-[150px] -translate-y-1/2 rounded-full border border-gold/40 sm:top-[84px] sm:h-[186px] sm:w-[186px]"
-                      animate={{ scale: [1, 1.45], opacity: [0.55, 0] }}
-                      transition={{
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: i * 1.5,
-                        ease: "easeOut",
-                      }}
-                    />
-                  ))}
-
-                  <motion.div
-                    className="drop-shadow-[0_14px_34px_rgba(0,0,0,0.65)]"
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <div className="transition-transform duration-500 group-hover:scale-[1.06]">
-                      <SealMedallion size={136} className="sm:hidden">
-                        <SealFace />
-                      </SealMedallion>
-                      <SealMedallion size={172} className="hidden sm:block">
-                        <SealFace />
-                      </SealMedallion>
-                    </div>
-                  </motion.div>
-
-                  <motion.span
-                    className="mt-6 rounded-full border border-gold/30 bg-black/55 px-4 py-1.5 font-cinzel text-[10px] tracking-[0.4em] text-gold-light uppercase backdrop-blur-sm sm:text-xs"
-                    animate={{ opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 2.4, repeat: Infinity }}
-                  >
-                    Tap to open
-                  </motion.span>
+                  <span className="absolute inset-0 -z-10 rounded-full border border-gold/45 animate-ping opacity-30" />
+                  Tap to open
                 </motion.button>
               </motion.div>
             )}
           </AnimatePresence>
-
           {/* ---- lamps flanking the threshold ---- */}
           <div className="pointer-events-none absolute bottom-0 left-4 z-30 hidden opacity-90 sm:left-10 md:block">
             <TempleLamp size={54} />
@@ -271,47 +274,5 @@ export default function GateIntro() {
         </motion.div>
       )}
     </AnimatePresence>
-  );
-}
-
-/** Monogram engraved into the seal disc — initials come from the couple's names. */
-function SealFace() {
-  const initials = `${wedding.groom.name.charAt(0)}&${wedding.bride.name.charAt(0)}`.toUpperCase();
-  const year = new Date(wedding.weddingDateISO).getFullYear();
-
-  return (
-    <g>
-      <g transform="translate(60,40) scale(0.42)" fill="#4A0A10" opacity="0.72">
-        {[-56, -28, 0, 28, 56].map((a) => (
-          <path key={a} d="M0 -24C5 -15 5 -6 0 1C-5 -6 -5 -15 0 -24Z" transform={`rotate(${a})`} />
-        ))}
-      </g>
-      <text
-        x="60"
-        y="72"
-        textAnchor="middle"
-        fontFamily="Cinzel, serif"
-        fontSize="26"
-        fontWeight="700"
-        fill="#4A0A10"
-        opacity="0.88"
-        letterSpacing="1"
-      >
-        {initials}
-      </text>
-      <path d="M42 80h36" stroke="#4A0A10" strokeWidth="1" opacity="0.5" />
-      <text
-        x="60"
-        y="93"
-        textAnchor="middle"
-        fontFamily="Cinzel, serif"
-        fontSize="8.5"
-        fill="#4A0A10"
-        opacity="0.7"
-        letterSpacing="2.6"
-      >
-        {year}
-      </text>
-    </g>
   );
 }
