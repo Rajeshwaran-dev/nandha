@@ -30,7 +30,7 @@ function Petal({ style, delay, size = 22 }) {
 
 export default function Blessings({ sectionRef }) {
   return (
-    <Section id="blessings" ref={sectionRef}>
+    <Section id="blessings" ref={sectionRef} contentClassName="blessings-content">
       <GoldParticles count={16} />
 
       {[0, 1, 2, 3, 4, 5].map((i) => (
@@ -50,12 +50,17 @@ export default function Blessings({ sectionRef }) {
         <TempleLamp size={64} />
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 26 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.4 }}
-        transition={{ duration: 0.95, ease: [0.2, 0.7, 0.3, 1] }}
-        className="relative z-10 mx-auto max-w-3xl"
+      <div className="blessings-layout">
+        <div className="blessings-parent-column blessings-parent-left">
+          <img src="/parents-1.png" alt="Groom's parents" className="blessings-parent" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 26 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.95, ease: [0.2, 0.7, 0.3, 1] }}
+          className="blessings-card relative z-10 mx-auto max-w-3xl"
       >
         <div className="card-royal relative px-8 py-12 text-center sm:px-14 sm:py-16">
           <span className="pointer-events-none absolute left-3 top-3 text-gold/40">
@@ -94,8 +99,13 @@ export default function Blessings({ sectionRef }) {
               {wedding.bride.parents && <span>{wedding.bride.parents}</span>}
             </div>
           )}
+          </div>
+        </motion.div>
+
+        <div className="blessings-parent-column blessings-parent-right">
+          <img src="/parents-2.png" alt="Bride's parents" className="blessings-parent" />
         </div>
-      </motion.div>
+      </div>
     </Section>
   );
 }
